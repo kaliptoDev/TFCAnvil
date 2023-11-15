@@ -1,0 +1,30 @@
+.cursor__slider {
+  display: flex;
+  position: absolute;
+  z-index: 10;
+  width: 451px;
+  top: 275px;
+  left: 31px;
+  height: 33px;
+  align-items: center;
+}
+
+.cursor__image {
+  position: absolute;
+}
+
+.cursor__slider__input {
+  z-index: 10;
+  opacity: 0;
+  width: 451px;
+  margin: 0;
+}
+
+.cursor__slider__input::-webkit-slider-thumb {
+  appearance: none;
+  background-image: url("/images/anvil/cursor.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
