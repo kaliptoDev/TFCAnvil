@@ -173,17 +173,25 @@ const Anvil = () => {
                 <div className='anvil__container__result'>
                     {
                         display === 'cases' ?
-                            result.map((item, index) => {
-                                return (
-                                    <ResultCase key={index} position={index + 1} content={item} />
-                                )
-                            })
+                            result?.length > 0 ?
+                                result.map((item, index) => {
+                                    return (
+                                        <ResultCase key={index} position={index + 1} content={item} />
+                                    )
+                                }) :
+
+                                <ResultCase key={0} position={1} content={null} />
+
                             :
                             resultNumbers.map((item, index) => {
                                 return (
                                     <div key={index} className='anvil__container__result__number'>
                                         <ResultCase key={index} position={index + 1} content={item.name} />
-                                        <span className='anvil__container__result__number__span'>x{item.count}</span>
+                                        <span className='anvil__container__result__number__span'>
+                                            {item.count > 0 && 
+                                                " x" +     
+                                                item.count}
+                                        </span>
                                     </div>
                                 )
                             })
@@ -191,7 +199,7 @@ const Anvil = () => {
                 </div>
 
                 <div className='anvil__container__version'>
-                    <span className='anvil__container__version__span'>v1.1.3</span>
+                    <span className='anvil__container__version__span'>v1.1.3.5</span>
                 </div>
             </div>
 
