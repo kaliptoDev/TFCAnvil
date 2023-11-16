@@ -14,6 +14,8 @@ const Anvil = () => {
 
     const [maxValue, setMaxValue] = useState(0)
     const [result, setResult] = useState([])
+    const [resultNumbers, setResultNumbers] = useState([])
+    const [display, setDisplay] = useState(localStorage.getItem('resultDisplay'))
 
     const handleReset = () => {
         setUserRequierementsChoices([])
@@ -26,13 +28,26 @@ const Anvil = () => {
 
     useEffect(() => {
         setResult(getOptimizedPath(userRequierementsChoices, cursorPosition, maxValue, setMaxValue))
+        if (localStorage.getItem('resultDisplay') == 'numbers') {
+            setResultNumbers(getResultsInNumbers(getOptimizedPath(userRequierementsChoices, cursorPosition, maxValue, setMaxValue)))
+        }
     },
-        [userRequierementsChoices, cursorPosition]);
+        [userRequierementsChoices, cursorPosition, display]);
 
     useEffect(() => {
-        // console.log(maxValue)
+        if (!localStorage.getItem('resultDisplay')) {
+            localStorage.setItem('resultDisplay', 'cases')
+            setDisplay('cases')
+        }
     },
-        [maxValue]);
+        []);
+
+    // useEffect(() => {
+    //     setResult(getOptimizedPath(userRequierementsChoices, cursorPosition, maxValue, setMaxValue))
+    //     if (localStorage.getItem('resultDisplay') == 'numbers') {
+    //         setResultNumbers(getResultsInNumbers())
+    //     }
+    // }, [display])
 
     const handlePushNewChoice = (choice) => {
         if (userRequierementsChoices.length < 3) {
@@ -44,6 +59,48 @@ const Anvil = () => {
             setUserRequierementsChoices([...buffer, choice])
         }
     }
+
+    const handleSwitch = () => {
+        if (localStorage.getItem('resultDisplay') === 'cases') {
+            localStorage.setItem('resultDisplay', 'numbers')
+            setDisplay('numbers')
+            setResultNumbers(getResultsInNumbers())
+        }
+        else {
+            localStorage.setItem('resultDisplay', 'cases')
+            setDisplay('cases')
+        }
+    }
+
+    // console.log(result)
+
+    const getResultsInNumbers = (elements) => {
+        let results = [];
+        let currentElement = null;
+        let count = 0;
+
+        for (let i = 0; i < elements.length; i++) {
+            if (currentElement === null) {
+                currentElement = elements[i];
+                count++;
+            } else if (currentElement === elements[i]) {
+                count++;
+            } else {
+                results.push({ name: currentElement, count });
+                currentElement = elements[i];
+                count = 1;
+            }
+        }
+        results.push({ name: currentElement, count });
+        console.log(results)
+        return results
+    }
+
+
+
+
+
+
 
     return (
         <div className="anvil">
@@ -61,6 +118,10 @@ const Anvil = () => {
                 <div className='reset__container' onClick={() => handleReset()}>
                     <img src="/icons/red-cross.png" alt="red-cross" className="anvil__red-cross" />
                     <span className='reset__span'>RESET</span>
+                </div>
+
+                <div className='switch__container' onClick={() => handleSwitch()}>
+                    <span className='switch__span' >Switch Display</span>
                 </div>
 
                 <div className='anvil__container__inputs'>
@@ -110,11 +171,22 @@ const Anvil = () => {
                 <Cursor />
 
                 <div className='anvil__container__result'>
-                    {result.length > 0 ? result.map((item, index) => {
-                        return <ResultCase key={index} position={index + 1} content={item} />
-                    }
-                    )
-                        : <ResultCase position={1} content={null} />
+                    {
+                        display === 'cases' ?
+                            result.map((item, index) => {
+                                return (
+                                    <ResultCase key={index} position={index + 1} content={item} />
+                                )
+                            })
+                            :
+                            resultNumbers.map((item, index) => {
+                                return (
+                                    <div key={index} className='anvil__container__result__number'>
+                                        <ResultCase key={index} position={index + 1} content={item.name} />
+                                        <span className='anvil__container__result__number__span'>x{item.count}</span>
+                                    </div>
+                                )
+                            })
                     }
                 </div>
 

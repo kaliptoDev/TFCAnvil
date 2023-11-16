@@ -37,13 +37,18 @@
 
 .reset__container {
   position: absolute;
-  top: 87px;
-  left: 70%;
+  top: 79px;
+  left: 73%;
   z-index: 10;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  padding: 6px 4px;
+  box-sizing: border-box;
+  border: rgba(0, 0, 0, 0.3) 2px solid;
+  border-radius: 8px;
+  transition: all 0.1s ease-in-out;
 }
 
 .reset__span {
@@ -54,14 +59,32 @@
   transition: all 0.15s ease-in-out;
 }
 
-.reset__container:hover > .reset__span {
+.reset__container:hover {
   cursor: pointer;
-  transform: scale(1.05);
+  transform: scale(1.025);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-.reset__container:hover > .anvil__red-cross {
+.switch__container {
+  position: absolute;
+  top: 129px;
+  left: 73%;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 4px;
+  box-sizing: border-box;
+  border: rgba(0, 0, 0, 0.3) 2px solid;
+  border-radius: 8px;
+  transition: all 0.1s ease-in-out;
+}
+
+.switch__container:hover {
   cursor: pointer;
-  transform: scale(1.05);
+  transform: scale(1.025);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .anvil__container__cases {
