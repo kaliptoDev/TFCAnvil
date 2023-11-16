@@ -1,21 +1,37 @@
-export const getOptimizedPath = (choices, value) => {
+export const getOptimizedPath = (choices, value, maxValue, setMaxValue) => {
     const values = {
         "small-hit": -3,
         "medium-hit": -6,
         "hard-hit": -9,
-        "shrink": -15,
+        "draw": -15,
         "punch": 2,
         "bend": 7,
-        "draw": 13,
-        "upset": 16,
+        "upset": 13,
+        "shrink": 16,
     }
 
     const thirdLast = choices[0]
     const secondLast = choices[1]
     const last = choices[2]
 
+    let minLimit = 0
+    let maxLimit = 145
+
+        choices.map((choice) => {
+            if (values[choice] < 0) {
+                minLimit = minLimit - values[choice]
+            }
+        })
+
+        choices.map((choice) => {
+            if (values[choice] > 0) {
+                maxLimit = maxLimit - values[choice]
+            }
+        })
+
+
+    let iterations = 0
     let goal = value
-    // const initialGoal = value
     let current = 0
 
     let path = []
@@ -24,13 +40,17 @@ export const getOptimizedPath = (choices, value) => {
     if (secondLast) goal = goal - values[secondLast]
     if (last) goal = goal - values[last]
 
+    if (goal < minLimit || goal > maxLimit || goal > 145) {
+        return []
+    }
+
     while (current < goal && current <= 145) {
-        if (current + values["upset"] <= goal) {
+        if (current + values["shrink"] <= goal) {
+            path.push("shrink")
+            current = current + values["shrink"]
+        } else if (current + values["upset"] <= goal) {
             path.push("upset")
             current = current + values["upset"]
-        } else if (current + values["draw"] <= goal) {
-            path.push("draw")
-            current = current + values["draw"]
         } else if (current + values["bend"] <= goal) {
             path.push("bend")
             current = current + values["bend"]
@@ -38,6 +58,7 @@ export const getOptimizedPath = (choices, value) => {
             path.push("punch")
             current = current + values["punch"]
         } else break
+        iterations++
     }
 
     if (current != goal) {
@@ -54,26 +75,37 @@ export const getOptimizedPath = (choices, value) => {
             current = current + values["bend"]
         }
 
-        if (current < 0 || current > 145) {
-            console.warn("Path is not possible")
+        if (current < minLimit || current > maxLimit || current > 145) {
             return []
         }
+        iterations++
+
     }
 
-    thirdLast && path.push(thirdLast)
-    if (thirdLast) current = current + values[thirdLast]
 
-    secondLast && path.push(secondLast)
-    if (secondLast) current = current + values[secondLast]
+    if (thirdLast) {
+        current = current + values[thirdLast]
+        thirdLast && path.push(thirdLast)
+        iterations++
+    }
 
-    last && path.push(last)
-    if (last) current = current + values[last]
+    if (secondLast) {
+        current = current + values[secondLast]
+        secondLast && path.push(secondLast)
+        iterations++
+    }
 
-    // console.log(path)
-    // console.log("Current is: " + current)
-    // console.log("Goal was: " + initialGoal)
+
+    if (last) {
+        current = current + values[last]
+        last && path.push(last)
+        iterations++
+    }
 
 
+    if (iterations > maxValue) {
+        setMaxValue(iterations)
+    }
     return path
 }
 

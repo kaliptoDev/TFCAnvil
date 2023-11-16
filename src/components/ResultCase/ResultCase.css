@@ -1,0 +1,12 @@
+.result-case__image {
+    width: 47px;
+    height: 47px;
+}
+
+.result-case {
+    margin: 0 5px;
+}
+
+.result-case:hover {
+    /* cursor: pointer; */
+}

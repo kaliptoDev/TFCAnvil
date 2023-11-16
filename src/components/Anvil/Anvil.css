@@ -105,3 +105,16 @@
 .anvil__counter__input:focus {
   outline: none;
 }
+
+.anvil__container__result {
+    position: absolute;
+    top: 83%;
+    left: 50%;
+    width: 90%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
