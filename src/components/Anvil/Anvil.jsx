@@ -191,7 +191,7 @@ const Anvil = () => {
                 </div>
 
                 <div className='anvil__container__version'>
-                    <span className='anvil__container__version__span'>v1.1.2</span>
+                    <span className='anvil__container__version__span'>v1.1.3</span>
                 </div>
             </div>
 
