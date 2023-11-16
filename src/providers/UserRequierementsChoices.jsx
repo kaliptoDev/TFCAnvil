@@ -13,7 +13,7 @@ const UserRequierementsChoicesProvider = ({ children }) => {
 
     useEffect(() => {
         localStorage.setItem('userRequierementsChoices', JSON.stringify(userRequierementsChoices));
-        setUserRequierementsChoices(["small-hit", "small-hit", "small-hit"]);
+        setUserRequierementsChoices([]);
     }, []);
 
     useEffect(() => {
