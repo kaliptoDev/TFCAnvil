@@ -10,113 +10,69 @@ export const getOptimizedPath = (choices, value) => {
         "upset": 16,
     }
 
-    const initialValue = value
-
     const thirdLast = choices[0]
     const secondLast = choices[1]
     const last = choices[2]
 
+    let goal = value
+    // const initialGoal = value
+    let current = 0
+
     let path = []
-    let iterations = 0
 
-    if (thirdLast) value = value - values[thirdLast]
-    if (secondLast) value = value - values[secondLast]
-    if (last) value = value - values[last]
+    if (thirdLast) goal = goal - values[thirdLast]
+    if (secondLast) goal = goal - values[secondLast]
+    if (last) goal = goal - values[last]
 
-
-    while (value > 0) {
-        if (value - values["upset"] >= 0) {
+    while (current < goal && current <= 145) {
+        if (current + values["upset"] <= goal) {
             path.push("upset")
-            value = value - values["upset"]
-            iterations++
-        } else break
-    }
-
-    while (value > 0) {
-        if (value - values["draw"] >= 0) {
+            current = current + values["upset"]
+        } else if (current + values["draw"] <= goal) {
             path.push("draw")
-            value = value - values["draw"]
-            iterations++
-        } else break
-    }
-
-    while (value > 0) {
-        if (value - values["bend"] >= 0) {
+            current = current + values["draw"]
+        } else if (current + values["bend"] <= goal) {
             path.push("bend")
-            value = value - values["bend"]
-            iterations++
-        } else break
-    }
-
-    while (value > 0) {
-        if (value - values["punch"] >= 0) {
+            current = current + values["bend"]
+        } else if (current + values["punch"] <= goal) {
             path.push("punch")
-            value = value - values["punch"]
-            iterations++
+            current = current + values["punch"]
         } else break
     }
 
-    while (value > 0) {
-        if (value + values["shrink"] >= 0) {
-            path.push("shrink")
-            value = value + values["shrink"]
-            iterations++
-        } else break
-    }
-
-    while (value > 0) {
-        if (value + values["hard-hit"] >= 0) {
-            path.push("hard-hit")
-            value = value + values["hard-hit"]
-            iterations++
-        }
-        else break
-    }
-
-    while (value > 0) {
-        if (value + values["medium-hit"] >= 0) {
+    if (current != goal) {
+        if (current <= 10) {
+            path.push("bend")
+            current = current + values["bend"]
             path.push("medium-hit")
-            value = value + values["medium-hit"]
-            iterations++
+            current = current + values["medium-hit"]
+
+        } else {
+            path.push("medium-hit")
+            current = current + values["medium-hit"]
+            path.push("bend")
+            current = current + values["bend"]
         }
-        else break
-    }
 
-    while (value > 0) {
-        if (value + values["small-hit"] >= 0) {
-            path.push("small-hit")
-            value = value + values["small-hit"]
-            iterations++
-        }
-        else break
-    }
-
-    if (value === 1 && initialValue >= 3) {
-
-        if (value + values["small-hit"] >= 0 && value + values["punch"] >= 0) {
-            path.push("small-hit")
-            value = value + values["small-hit"]
-            iterations++
-            path.push("punch")
-            value = value + values["punch"]
+        if (current < 0 || current > 145) {
+            console.warn("Path is not possible")
+            return []
         }
     }
-
-    // console.log(value)
-    // console.log(iterations)
-
 
     thirdLast && path.push(thirdLast)
-    secondLast && path.push(secondLast)
-    last && path.push(last)
+    if (thirdLast) current = current + values[thirdLast]
 
-    if (value != 0) {
-        console.log("Erreur: " + value)
-        return
-    }
-    // console.log("Nombre d'itérations: " + iterations)
-    console.log("Valeur demandée: " + initialValue)
-    console.log("Chemin: " + path)
+    secondLast && path.push(secondLast)
+    if (secondLast) current = current + values[secondLast]
+
+    last && path.push(last)
+    if (last) current = current + values[last]
+
+    // console.log(path)
+    // console.log("Current is: " + current)
+    // console.log("Goal was: " + initialGoal)
+
 
     return path
 }
