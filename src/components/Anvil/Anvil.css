@@ -118,3 +118,39 @@
     align-items: center;
     flex-wrap: wrap;
 }
+
+.anvil__container__inputs {
+    position: absolute;
+    width: calc(47px * 5 + 7px * 5);
+    top: 31%;
+    left: 19%;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: end;
+    
+}
+
+.anvil__container__inputs__firstline {
+    height: 47px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0 0 8px 0;
+}
+
+.anvil__container__inputs__secondline {
+    height: 47px;
+    display: flex;
+    flex-direction: row;
+    width: calc(100% - 54px);
+}
+
+.anvil__container__inputs__input {
+    width: 47px;
+    height: 47px;
+    border: 3px solid rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    margin: 4px 4px 4px 3px;
+    cursor: pointer;
+}

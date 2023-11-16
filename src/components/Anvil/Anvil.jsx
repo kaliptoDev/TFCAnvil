@@ -34,6 +34,17 @@ const Anvil = () => {
     },
         [maxValue]);
 
+    const handlePushNewChoice = (choice) => {
+        if (userRequierementsChoices.length < 3) {
+            setUserRequierementsChoices([...userRequierementsChoices, choice])
+        } else {
+            let buffer = userRequierementsChoices
+            buffer.shift()
+
+            setUserRequierementsChoices([...buffer, choice])
+        }
+    }
+
     return (
         <div className="anvil">
             <img src="/images/anvil/full-anvil.png" alt="anvil" className="anvil__image" />
@@ -51,6 +62,50 @@ const Anvil = () => {
                     <img src="/icons/red-cross.png" alt="red-cross" className="anvil__red-cross" />
                     <span className='reset__span'>RESET</span>
                 </div>
+
+                <div className='anvil__container__inputs'>
+                    <div className='anvil__container__inputs__firstline'>
+                        <div className='anvil__container__inputs__input'
+                            onClick={() => { handlePushNewChoice("any-hit") }}
+                        >
+                        </div>
+                        <div className='anvil__container__inputs__input'
+                            onClick={() => { handlePushNewChoice("small-hit") }}
+                        >
+                        </div>
+                        <div className='anvil__container__inputs__input'
+                            onClick={() => { handlePushNewChoice("medium-hit") }}
+                        >
+                        </div>
+                        <div className='anvil__container__inputs__input'
+                            onClick={() => { handlePushNewChoice("punch") }}
+                        >
+                        </div>
+                        <div className='anvil__container__inputs__input'
+                            onClick={() => { handlePushNewChoice("bend") }}
+                        >
+                        </div>
+                    </div>
+                    <div className='anvil__container__inputs__secondline'>
+                        <div className='anvil__container__inputs__input'
+                            onClick={() => { handlePushNewChoice("hard-hit") }}>
+                        </div>
+                        <div className='anvil__container__inputs__input'
+                            onClick={() => { handlePushNewChoice("draw") }}
+                        >
+                        </div>
+                        <div className='anvil__container__inputs__input'
+                            onClick={() => { handlePushNewChoice("upset") }}
+                        >
+                        </div>
+                        <div className='anvil__container__inputs__input'
+                            onClick={() => { handlePushNewChoice("shrink") }}
+                        >
+                        </div>
+                    </div>
+                </div>
+
+
 
                 <Cursor />
 

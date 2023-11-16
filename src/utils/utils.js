@@ -8,6 +8,7 @@ export const getOptimizedPath = (choices, value, maxValue, setMaxValue) => {
         "bend": 7,
         "upset": 13,
         "shrink": 16,
+        "any-hit": -3
     }
 
     const thirdLast = choices[0]
