@@ -117,6 +117,10 @@ const Anvil = () => {
                         : <ResultCase position={1} content={null} />
                     }
                 </div>
+
+                <div className='anvil__container__version'>
+                    <span className='anvil__container__version__span'>v1.1.2</span>
+                </div>
             </div>
 
         </div>
