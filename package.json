@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "buildDev": "vite build",
-    "build": "vite build && scp -r -P 2022 C:/Users/kaliptoDev/Desktop/Projects/TFCAnvil/TFCAnvil/* kalipto@192.168.1.33:/home/kalipto/containers/kaliptodev/www/",
+    "buildOld": "vite build && scp -r -P 2022 C:/Users/kaliptoDev/Desktop/Projects/TFCAnvil/TFCAnvil/* kalipto@192.168.1.33:/home/kalipto/containers/kaliptodev/www/",
+    "build": "vite build --emptyOutDir",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

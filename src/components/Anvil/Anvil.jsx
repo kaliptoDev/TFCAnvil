@@ -188,8 +188,8 @@ const Anvil = () => {
                                     <div key={index} className='anvil__container__result__number'>
                                         <ResultCase key={index} position={index + 1} content={item.name} />
                                         <span className='anvil__container__result__number__span'>
-                                            {item.count > 0 && 
-                                                " x" +     
+                                            {item.count > 0 &&
+                                                " x" +
                                                 item.count}
                                         </span>
                                     </div>
