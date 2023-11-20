@@ -92,7 +92,6 @@ const Anvil = () => {
             }
         }
         results.push({ name: currentElement, count });
-        console.log(results)
         return results
     }
 
