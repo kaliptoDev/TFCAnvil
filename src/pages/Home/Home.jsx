@@ -1,11 +1,11 @@
 import './Home.css'
-import Anvil from '../../components/Anvil/Anvil'
+import TFCAnvil from '../TFCAnvilPage/TFCAnvil'
 
 const Home = () => {
 
     return (
         <div className="home">
-            <Anvil />
+            <TFCAnvil />
         </div>
     )
 }

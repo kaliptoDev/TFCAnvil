@@ -10,11 +10,7 @@ function App() {
 
   return (
     <Router>
-      <CursorPositionProvider>
-        <UserRequierementsChoicesProvider>
-          <RoutesTree />
-        </UserRequierementsChoicesProvider>
-      </CursorPositionProvider>
+      <RoutesTree />
     </Router>
   )
 }
