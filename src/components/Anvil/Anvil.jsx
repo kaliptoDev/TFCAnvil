@@ -6,6 +6,7 @@ import useCursorPosition from '../../hooks/useCursorPosition'
 import { useEffect, useState } from 'react'
 import getOptimizedPath from '../../utils/utils'
 import ResultCase from '../ResultCase/ResultCase'
+import shortid from 'shortid';
 
 const Anvil = () => {
 
@@ -22,8 +23,12 @@ const Anvil = () => {
     }
 
     const handleCounterChange = (value) => {
-        value < 0 ? value = 0 : value > 145 ? value = 145 : value = value
-        setCursorPosition(value)
+        if (value < 0) {
+            value = 0;
+        } else if (value > 145) {
+            value = 145;
+        }
+        setCursorPosition(value);
     }
 
     useEffect(() => {
@@ -79,27 +84,21 @@ const Anvil = () => {
         let currentElement = null;
         let count = 0;
 
-        for (let i = 0; i < elements.length; i++) {
+        for (const element of elements) {
             if (currentElement === null) {
-                currentElement = elements[i];
+                currentElement = element;
                 count++;
-            } else if (currentElement === elements[i]) {
+            } else if (currentElement === element) {
                 count++;
             } else {
                 results.push({ name: currentElement, count });
-                currentElement = elements[i];
+                currentElement = element;
                 count = 1;
             }
         }
         results.push({ name: currentElement, count });
         return results
     }
-
-
-
-
-
-
 
     return (
         <div className="anvil">
@@ -114,12 +113,16 @@ const Anvil = () => {
                     <DisplayCase position={2} content={userRequierementsChoices[1]} />
                     <DisplayCase position={3} content={userRequierementsChoices[2]} />
                 </div>
-                <div className='reset__container' onClick={() => handleReset()}>
+                <div className='reset__container' onClick={() => handleReset()}
+                    onKeyDown={(e) => { if (e.key === 'Enter') handleReset() }}
+                >
                     <img src="/icons/red-cross.png" alt="red-cross" className="anvil__red-cross" />
                     <span className='reset__span'>RESET</span>
                 </div>
 
-                <div className='switch__container' onClick={() => handleSwitch()}>
+                <div className='switch__container' onClick={() => handleSwitch()}
+                    onKeyDown={(e) => { if (e.key === 'Enter') handleSwitch() }}
+                >
                     <span className='switch__span' >Switch Display</span>
                 </div>
 
@@ -127,39 +130,50 @@ const Anvil = () => {
                     <div className='anvil__container__inputs__firstline'>
                         <div className='anvil__container__inputs__input'
                             onClick={() => { handlePushNewChoice("any-hit") }}
+                            onKeyDown={(e) => { if (e.key === 'Enter') handlePushNewChoice("any-hit") }}
                         >
                         </div>
                         <div className='anvil__container__inputs__input'
                             onClick={() => { handlePushNewChoice("small-hit") }}
+                            onKeyDown={(e) => { if (e.key === 'Enter') handlePushNewChoice("small-hit") }}
                         >
                         </div>
                         <div className='anvil__container__inputs__input'
                             onClick={() => { handlePushNewChoice("medium-hit") }}
+                            onKeyDown={(e) => { if (e.key === 'Enter') handlePushNewChoice("medium-hit") }}
                         >
                         </div>
                         <div className='anvil__container__inputs__input'
                             onClick={() => { handlePushNewChoice("punch") }}
+                            onKeyDown={(e) => { if (e.key === 'Enter') handlePushNewChoice("punch") }}
                         >
                         </div>
                         <div className='anvil__container__inputs__input'
                             onClick={() => { handlePushNewChoice("bend") }}
+                            onKeyDown={(e) => { if (e.key === 'Enter') handlePushNewChoice("bend") }}
                         >
                         </div>
                     </div>
                     <div className='anvil__container__inputs__secondline'>
                         <div className='anvil__container__inputs__input'
-                            onClick={() => { handlePushNewChoice("hard-hit") }}>
+                            onClick={() => { handlePushNewChoice("hard-hit") }}
+                            onKeyDown={(e) => { if (e.key === 'Enter') handlePushNewChoice("hard-hit") }}
+                        >
+
                         </div>
                         <div className='anvil__container__inputs__input'
                             onClick={() => { handlePushNewChoice("draw") }}
+                            onKeyDown={(e) => { if (e.key === 'Enter') handlePushNewChoice("draw") }}
                         >
                         </div>
                         <div className='anvil__container__inputs__input'
                             onClick={() => { handlePushNewChoice("upset") }}
+                            onKeyDown={(e) => { if (e.key === 'Enter') handlePushNewChoice("upset") }}
                         >
                         </div>
                         <div className='anvil__container__inputs__input'
                             onClick={() => { handlePushNewChoice("shrink") }}
+                            onKeyDown={(e) => { if (e.key === 'Enter') handlePushNewChoice("shrink") }}
                         >
                         </div>
                     </div>
@@ -175,7 +189,7 @@ const Anvil = () => {
                             result?.length > 0 ?
                                 result.map((item, index) => {
                                     return (
-                                        <ResultCase key={index} position={index + 1} content={item} />
+                                        <ResultCase key={shortid.generate()} position={index + 1} content={item} />
                                     )
                                 }) :
 
@@ -184,8 +198,8 @@ const Anvil = () => {
                             :
                             resultNumbers.map((item, index) => {
                                 return (
-                                    <div key={index} className='anvil__container__result__number'>
-                                        <ResultCase key={index} position={index + 1} content={item.name} />
+                                    <div key={shortid.generate()} className='anvil__container__result__number'>
+                                        <ResultCase key={shortid.generate()} position={index + 1} content={item.name} />
                                         <span className='anvil__container__result__number__span'>
                                             {item.count > 0 &&
                                                 " x" +
@@ -198,7 +212,7 @@ const Anvil = () => {
                 </div>
 
                 <div className='anvil__container__version'>
-                    <span className='anvil__container__version__span'>v1.1.3.5</span>
+                    <span className='anvil__container__version__span'>v1.1.3.7</span>
                 </div>
             </div>
 
